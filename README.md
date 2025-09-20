@@ -32,3 +32,10 @@ A simple and configurable tool for automating Proxmox LXC snapshots and updates.
 ## Configuration
 
 The default configuration should suffice for most users. The options are documented in the `config.py` file
+
+## Outlook
+
+This is a small side project I have mostly made for myself.
+I will do my best to keep it updated, Pull resuests are appreciated.
+
+That being said, a feature I would like to implement in the not so far future are configurable automated health checks and rollbacks on failure.
