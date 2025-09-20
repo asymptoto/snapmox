@@ -6,6 +6,9 @@ def run(containers: list[common.Container]) -> None:
     print("Starting snapshot creation")
     for container in containers:
         now = datetime.now()
+        if container.template:
+            print(f"CT {container.id} is a template. Skipping")
+            continue
         if container.id in config.EXCLUDE_SNAPSHOTS:
             print(f"Skipping snapshot creation for CT {container.id} due to exclude list")
             continue

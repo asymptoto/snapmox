@@ -7,6 +7,9 @@ def run(containers: list[common.Container]) -> None:
     print("Starting updates")
     for container in containers:
         try:
+            if container.template:
+                print(f"CT {container.id} is a template. Skipping")
+                continue
             if container.id in config.EXCLUDE_UPDATE:
                 print(f"Skipping updates for CT {container.id} due to exclusion list")
                 continue

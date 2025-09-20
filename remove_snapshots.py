@@ -5,6 +5,10 @@ def run(containers: list[common.Container]) -> None:
     print("Starting snapshot cleanup")
     
     for container in containers:
+        if container.template:
+            print(f"CT {container.id} is a template. Skipping")
+            continue
+
         print(f"Cleaning snapshots for CT {container.id}")
 
         daily_count = 0

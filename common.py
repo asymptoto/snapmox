@@ -78,6 +78,7 @@ class Container():
     state: State
     networks: dict[str, str]
     upgrade_safe: bool
+    template: bool
 
 
     def _get_snapshots(self):
@@ -102,6 +103,7 @@ class Container():
     def __init__(self, id: int | str):
         self.id = int(id)
         self.networks = dict()
+        self.template = False
         output = subprocess.check_output(["pct", "config", str(id)]).decode().split("\n")
         for line in output:
             match line.split(":")[0]:
@@ -114,6 +116,7 @@ class Container():
                 case "swap": self.swap = int(line[6:])
                 case "hostname": self.hostname = line[9:]
                 case "unprivileged": self.unprivileged = bool(line[14:])
+                case "template": self.template = bool(line[10:])
                 case _:
                     if line.startswith("net"):
                         split = line.split(" ")
