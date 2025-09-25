@@ -4,14 +4,20 @@ A simple and configurable tool for automating Proxmox LXC snapshots and updates.
 
 ## Features
 
+- **Important:** There is an integrated backup tool inside of Proxmox that works *almost* identically (go to Datacenter -> Backup)
+    - This differs from the integrated tool by not creating full backups
+    - Instead, it creates a storage level snapshot on the same device
+    - This is faster and more efficient but it does not protect you from a storage device failure (unless you use redundant storage like Ceph)
+    - Regular backups should still be integrated into your recovery strategy
+    - It also requires a storage system with snapshot support (see the Proxmox [Documentation](https://pve.proxmox.com/pve-docs/pve-admin-guide.html#chapter_storage))
 - This tool has highly configurable options to automatically create snapshots and update LXC containers
 - There are 5 snapshot cycles: `YEARLY, QUARTERLY, MONTHLY, WEEKLY` and `DAILY`
 - You can configure how many snapshots should be retained for each cycle
 - Manually created snapshots that don't match the managed pattern will not be removed or taken into account in any way
 - You can run automatic updates in the containers which are executed immediately after the snapshots are created
-- This way, if anything goes wrong with the update you have an immediate snapshot to fall back on
+- This way, if anything goes wrong during the update you have an immediate snapshot to fall back on
     - You can also configure automatic rollbacks when an error occours during an update
-- You can also configure containers which are excluded from snapshots/updates if you prefer to manage them manually
+- You can configure containers which are excluded from snapshots/updates if you prefer to manage them manually
 - The update command is configurable per container and uses the default command for the distribution if no custom command is configured
 
 ## Installation
