@@ -162,7 +162,8 @@ def get_containers() -> list[Container]:
 def create_snapshot(container: Container, type: SnapshotType):
     now = datetime.datetime.now()
     tag = f"snapshot-{type.value}-{now.strftime('%Y%m%d_%H%M%S')}"
-    subprocess.check_call(["pct", "snapshot", str(container.id), tag, "--description", "Managed by Snapmox"])
+    output = subprocess.check_output(["pct", "snapshot", str(container.id), tag, "--description", "Managed by Snapmox"]).decode()
+    print(output)
     container.snapshots.append(Snapshot(tag, now, type))
     print(f"Created {type.value} snapshot for CT {container.id}")
 
@@ -179,7 +180,8 @@ def snapshot_exists(container: Container) -> bool:
 
 def remove_snapshot(container: Container, snapshot: Snapshot) -> None:
     try:
-        subprocess.check_call(["pct", "delsnapshot", str(container.id), snapshot.tag])
+        output = subprocess.check_output(["pct", "delsnapshot", str(container.id), snapshot.tag]).decode()
+        print(output)
         print(f"Removed snapshot {snapshot.tag} for CT {container.id}")
     except Exception as e:
         print(f"An error occoured trying to remove snapshot {snapshot.tag} for CT {container.id}:\n{e}")
@@ -187,7 +189,8 @@ def remove_snapshot(container: Container, snapshot: Snapshot) -> None:
 
 def rollback(container: Container) -> None:
     try:
-        subprocess.check_call(["pct", "rollback", str(container.id), container.snapshots[-1].tag, "--start", "true"])
+        output = subprocess.check_output(["pct", "rollback", str(container.id), container.snapshots[-1].tag, "--start", "true"]).decode()
+        print(output)
         print(f"Rolled CT {container.id} back to {container.snapshots[-1].tag}")
     except Exception as e:
         print(f"An error occoured trying to roll back CT {container.id}:\n{e}")
