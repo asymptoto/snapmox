@@ -164,7 +164,7 @@ def create_snapshot(container: Container, type: SnapshotType):
     tag = f"snapshot-{type.value}-{now.strftime('%Y%m%d_%H%M%S')}"
     output = subprocess.check_output(["pct", "snapshot", str(container.id), tag, "--description", "Managed by Snapmox"]).decode()
     print(output)
-    container.snapshots.append(Snapshot(tag, now, type))
+    container.snapshots.insert(0, Snapshot(tag, now, type))
     print(f"Created {type.value} snapshot for CT {container.id}")
 
 
