@@ -143,7 +143,7 @@ ostype: {self.os_type}
 rootfs: {self.root_fs}
 swap: {self.swap}
 unprivileged: {self.unprivileged}
-snapshots: {self.snapshots}"""
+snapshots: \n\t{"\n\t".join(list(map(lambda snap: str(snap), self.snapshots)))}"""
 
 
 def get_containers() -> list[Container]:
